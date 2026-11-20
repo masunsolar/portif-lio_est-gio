@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfólio Hub Uniware</title>
+<meta name="description" content="Portfólio do projeto de estágio Hub Uniware: plataforma interna de apoio ao suporte técnico da Uniware. Natan Souza Rodrigues, Ciência da Computação, UniFil, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* Identidade do próprio Hub Uniware: grafite, cinzas puxados para o malva, destaque roxo.
+   Layout: página única, seções numeradas 1–7 na mesma ordem da estrutura pedida pelo professor. */
+:root{
+  --bg:#121114;
+  --surface:#1b1a1f;
+  --surface-2:#232128;
+  --line:#2f2c36;
+  --text:#ecebf0;
+  --muted:#a29fae;
+  --accent:#a78bfa;
+  --accent-strong:#7c5cf0;
+  --ok:#4ade80;
+  --warn:#fbbf24;
+  --font-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --radius:10px;
+  --wrap:1180px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--font-display);line-height:1.15;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.7rem,3.2vw,2.3rem);font-weight:700}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.mono{font-family:var(--font-mono);font-size:.86em}
+
+/* topo */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(18,17,20,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:24px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-family:var(--font-display);font-weight:700;white-space:nowrap}
+.brand-mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--accent-strong),#3b2f63);display:grid;place-items:center;font-size:13px;color:#fff}
+.brand small{font-family:var(--font-body);font-weight:400;color:var(--muted);font-size:.8rem}
+.nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--muted);text-decoration:none;font-size:.88rem;padding:8px 10px;border-radius:6px;white-space:nowrap}
+.nav a span{font-family:var(--font-mono);font-size:.75rem;color:var(--accent);margin-right:5px}
+.nav a:hover,.nav a[aria-current="true"]{color:var(--text);background:var(--surface-2)}
+@media (max-width:860px){.brand small{display:none}}
+
+/* seções */
+section{padding:84px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:grid;gap:10px;margin-bottom:40px;max-width:760px}
+.eyebrow{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.lead{color:var(--muted);font-size:1.05rem;max-width:68ch}
+.sub{margin:56px 0 18px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sub h3{font-size:1.35rem}
+.sub p{color:var(--muted);font-size:.95rem}
+
+/* hero */
+.hero{padding:72px 0 64px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:start}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.6rem,6vw,4.2rem);font-weight:700;letter-spacing:-.01em;margin:14px 0 10px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .tagline{font-size:1.25rem;color:var(--text);margin-bottom:18px}
+.hero .lead{margin-bottom:28px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:8px;text-decoration:none;font-weight:600;font-size:.95rem;border:1px solid var(--line);color:var(--text);background:var(--surface);cursor:pointer;font-family:var(--font-body)}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
+.btn.primary:hover{background:#6a49e6}
+.btn.small{padding:7px 12px;font-size:.85rem;font-weight:500}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.panel h3{margin-bottom:12px}
+.panel p{color:var(--muted)}
+dl.meta{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:18px 0 0;font-size:.93rem}
+dl.meta dt{color:var(--muted)}
+dl.meta dd{margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:56px}
+.stat{background:var(--surface);padding:22px 20px}
+.stat b{display:block;font-family:var(--font-display);font-size:2.2rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:.9rem}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* módulos */
+.modules{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px}
+@media (max-width:980px){.modules{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.modules{grid-template-columns:1fr}}
+.module{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:grid;gap:8px;align-content:start}
+.module.done{border-color:#4a3d7a}
+.module p{color:var(--muted);font-size:.88rem;line-height:1.5}
+
+/* pílulas de status */
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;width:max-content}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.ok{color:var(--ok);background:rgba(74,222,128,.1)}
+.pill.next{color:var(--warn);background:rgba(251,191,36,.1)}
+.pill.info{color:var(--accent);background:rgba(167,139,250,.12)}
+
+/* problema */
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:860px){.cards3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;gap:10px;align-content:start}
+.card .num{font-family:var(--font-mono);color:var(--accent);font-size:.82rem}
+.card p{color:var(--muted);font-size:.95rem}
+.grade{font-family:var(--font-mono);font-size:.8rem;color:var(--text);background:var(--surface-2);border-radius:6px;padding:2px 8px;width:max-content}
+.note{margin-top:16px;color:var(--muted);font-size:.95rem;max-width:80ch}
+
+/* tecnologias */
+.tech{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:860px){.tech{grid-template-columns:1fr}}
+.tech ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.tech li{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:.93rem}
+.tech li b{font-weight:600}
+.tech li .v{font-family:var(--font-mono);font-size:.78rem;color:var(--accent);align-self:center}
+.tech li small{grid-column:1/-1;color:var(--muted);font-size:.84rem}
+.tech .layer{font-family:var(--font-mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+
+/* arquitetura */
+.arch{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
+@media (max-width:860px){.arch{grid-template-columns:1fr}.arch .arrow{transform:rotate(90deg);justify-self:center}}
+.arch .box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:grid;gap:8px;align-content:start}
+.arch .box .k{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.arch .box ul{margin:0;padding-left:18px;color:var(--muted);font-size:.88rem;display:grid;gap:3px}
+.arch .arrow{display:grid;place-items:center;color:var(--muted);font-family:var(--font-mono);font-size:.72rem;text-align:center;gap:4px}
+.arch .arrow svg{width:46px;height:14px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.split ul{margin:0;padding-left:18px;color:var(--muted);font-size:.93rem;display:grid;gap:6px}
+.split ul b{color:var(--text);font-weight:600}
+
+/* tabelas */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:720px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;background:var(--surface-2);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+td .mono{color:var(--text)}
+td.n{font-family:var(--font-mono);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.date{white-space:nowrap;font-variant-numeric:tabular-nums}
+tr.group td{background:var(--surface-2);font-family:var(--font-mono);font-size:.78rem;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;padding:8px 14px}
+
+/* linha do tempo */
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:2px solid var(--line);margin-left:6px}
+.timeline li{position:relative;padding:0 0 18px 22px}
+.timeline li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.timeline li.hl::before{background:var(--accent)}
+.timeline time{font-family:var(--font-mono);font-size:.82rem;color:var(--accent)}
+.timeline p{color:var(--muted);font-size:.93rem}
+.timeline b{color:var(--text)}
+
+/* diagramas */
+.hint{color:var(--muted);font-size:.9rem;margin:-18px 0 24px}
+.diagrams{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:980px){.diagrams{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.diagrams{grid-template-columns:1fr}}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.dcard .thumb{display:block;border:0;padding:0;margin:0;background:#f6f5f2;cursor:zoom-in;aspect-ratio:3/2;width:100%;overflow:hidden}
+.dcard .thumb img{width:100%;height:100%;object-fit:contain;padding:8px}
+.dcard .thumb.gantt{aspect-ratio:auto;background:#fff}
+.dcard .thumb.gantt img{height:auto;padding:12px}
+.dcard .thumb.dark{background:#1e1e1e}
+.dcard .body{padding:16px 18px 18px;display:grid;gap:8px;align-content:start}
+.dcard .cat{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.dcard p{color:var(--muted);font-size:.88rem;line-height:1.5}
+.dcard .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.artefacts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:980px){.artefacts{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.artefacts{grid-template-columns:1fr}}
+.artefact{display:grid;gap:3px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;text-decoration:none;color:var(--text)}
+.artefact:hover{border-color:var(--accent)}
+.artefact b{font-weight:600;font-size:.95rem}
+.artefact span{color:var(--muted);font-size:.8rem;font-family:var(--font-mono)}
+
+/* telas */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+.tab{background:var(--surface);border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:999px;font:500 .9rem var(--font-body);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
+.shots{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+@media (max-width:760px){.shots{grid-template-columns:1fr}}
+.shot{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.shot button{display:block;border:0;padding:0;margin:0;cursor:zoom-in;background:#000;width:100%}
+.shot img{width:100%;aspect-ratio:1920/1000;object-fit:cover;object-position:top}
+.shot figcaption{padding:14px 16px 16px;display:grid;gap:4px}
+.shot figcaption b{font-weight:600}
+.shot figcaption span{color:var(--muted);font-size:.9rem}
+.shot .who{font-family:var(--font-mono);font-size:.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:.05em}
+[hidden]{display:none!important}
+.video{margin-bottom:28px}
+.video iframe,.video video{width:100%;aspect-ratio:16/9;border:0;border-radius:var(--radius);background:#000}
+
+/* relatório */
+.report{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:24px;align-items:start}
+@media (max-width:900px){.report{grid-template-columns:1fr}}
+.report ol{margin:14px 0 0;padding-left:20px;color:var(--muted);font-size:.92rem;display:grid;gap:3px}
+.pdf-frame{width:100%;height:760px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}
+.pdf-cover{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}
+
+/* aluno */
+.student{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+@media (max-width:700px){.student{grid-template-columns:1fr}}
+.student div{background:var(--surface);padding:18px 20px;display:grid;gap:4px}
+.student dt{color:var(--muted);font-size:.82rem;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.05em}
+.student dd{margin:0;font-size:1.08rem;font-weight:500}
+footer{padding:36px 0 48px;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{color:var(--muted)}
+
+/* visualizador de imagem */
+.viewer{position:fixed;inset:0;z-index:50;background:#0c0b0e;display:grid;grid-template-rows:auto 1fr;padding:0}
+.viewer-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg)}
+.viewer-bar .title{font-weight:600;margin-right:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.viewer-bar .count{font-family:var(--font-mono);font-size:.8rem;color:var(--muted)}
+.viewer-stage{overflow:auto;display:grid;place-items:center;padding:16px}
+.viewer-stage img{max-width:100%;max-height:calc(100vh - 100px);object-fit:contain;cursor:zoom-in;background:#fff;border-radius:6px}
+.viewer-stage.zoom{place-items:start}
+.viewer-stage.zoom img{max-width:none;max-height:none;cursor:zoom-out}
+.viewer-stage img.photo{background:transparent}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true">HU</span>Hub Uniware <small>· Portfólio de Estágio</small></a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#inicio"><span>1</span>Início</a>
+      <a href="#sobre"><span>2</span>Sobre</a>
+      <a href="#casos-de-uso"><span>3</span>Casos de uso e cronograma</a>
+      <a href="#documentacao"><span>4</span>Documentação</a>
+      <a href="#telas"><span>5</span>Telas</a>
+      <a href="#relatorio"><span>6</span>Relatório</a>
+      <a href="#aluno"><span>7</span>Aluno</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- 1. PÁGINA INICIAL -->
+<section id="inicio" class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">Portfólio de Estágio · Etapa 2 · 2026</span>
+        <h1>Hub <em>Uniware</em></h1>
+        <p class="tagline">Plataforma interna de apoio ao suporte técnico da Uniware</p>
+        <p class="lead">O Hub Uniware reúne em um único painel as ferramentas do dia a dia da equipe que atende os clientes do UniLab, sistema de gestão laboratorial da Uniware. Nesta etapa estão funcionando o UniKeeps, mural de conhecimento em que cada atendente registra um erro e a solução aplicada, e o gerenciador de troféus da gincana do sábado trabalhado, além do login e do cadastro de usuários.</p>
+        <div class="btns">
+          <a class="btn primary" href="#telas">Ver o sistema funcionando</a>
+          <a class="btn" href="docs/relatorio-estagio-etapa2-v2.1.pdf" target="_blank" rel="noopener">Relatório de Estágio (PDF)</a>
+          <a class="btn" href="#casos-de-uso">Casos de uso</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Objetivo do sistema</h3>
+        <p>Centralizar as ferramentas de apoio ao setor de suporte, reduzindo o tempo de atendimento, organizando o conhecimento produzido pela equipe e formalizando processos que hoje acontecem de maneira informal.</p>
+        <dl class="meta">
+          <dt>Empresa</dt><dd>Uniware Consultoria em Informática, Londrina/PR</dd>
+          <dt>Curso</dt><dd>Ciência da Computação, UniFil</dd>
+          <dt>Período</dt><dd>Agosto a novembro de 2026</dd>
+          <dt>Stack</dt><dd>React + TypeScript · Python + FastAPI · MariaDB</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="stats" role="list">
+      <div class="stat" role="listitem"><b>16</b><span>casos de uso no escopo do projeto</span></div>
+      <div class="stat" role="listitem"><b>7</b><span>casos de uso implementados nesta etapa</span></div>
+      <div class="stat" role="listitem"><b>3</b><span>perfis de acesso: suporte, supervisor e infraestrutura</span></div>
+      <div class="stat" role="listitem"><b>10</b><span>diagramas de modelagem e processo</span></div>
+    </div>
+
+    <div class="sub"><h3>Módulos do Hub</h3><p>O que já funciona e o que vem nas próximas etapas.</p></div>
+    <div class="modules">
+      <div class="module done"><span class="pill ok">Funcionando</span><h3>Troféus</h3><p>Registro das entregas da gincana pelo supervisor, edição em até 3 dias, ranking anual e histórico pessoal.</p></div>
+      <div class="module done"><span class="pill ok">Funcionando</span><h3>UniKeeps</h3><p>Keeps públicos e privados com tags e imagens, busca, filtro, grafo de conhecimento, validação e observações.</p></div>
+      <div class="module done"><span class="pill ok">Funcionando</span><h3>Usuários e acesso</h3><p>Login por sessão, troca de senha no primeiro acesso, cadastro individual ou por planilha, ativar e desativar.</p></div>
+      <div class="module"><span class="pill next">Próxima etapa</span><h3>Caixinha de Sugestão</h3><p>Sugestões públicas, com opção de anonimato, apoio dos colegas e acompanhamento pelo supervisor.</p></div>
+      <div class="module"><span class="pill next">Próxima etapa</span><h3>Uni-Bot e Tratador de Tabela</h3><p>Assistente de IA sobre o UniLab, alimentado só por Keeps validados, e tratamento automático das tabelas de convênio.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. SOBRE O PROJETO -->
+<section id="sobre">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">2 · Sobre o projeto</span>
+      <h2>Um painel único para a equipe de suporte</h2>
+      <p class="lead">O suporte da Uniware atende laboratórios e hospitais que usam o UniLab. O sucesso do setor é medido por chamados abertos, tempo médio de atendimento (TMA), tempo médio de espera (TME), CSAT, NPS, resolução no primeiro atendimento, reincidências e desistências.</p>
+    </div>
+
+    <div class="sub" style="margin-top:0"><h3>O problema</h3><p>Levantado com os supervisores do setor, com grau de importância de 0 a 5.</p></div>
+    <div class="cards3">
+      <div class="card"><span class="num">01</span><h3>Informação difícil de achar</h3><span class="grade">grau 5</span><p>O UniLab tem mais de trinta anos de evolução e recebe recursos novos todo mês. A documentação é difusa, e saber se uma regra existe e como funciona depende de poucas pessoas.</p></div>
+      <div class="card"><span class="num">02</span><h3>Conhecimento espalhado</h3><span class="grade">grau 4</span><p>Cada atendente anota erros e soluções do seu jeito, em arquivos pessoais ou conversas de aplicativo. A resposta dada por um colega se perde, e a mesma investigação é refeita no próximo chamado.</p></div>
+      <div class="card"><span class="num">03</span><h3>Processos informais</h3><span class="grade">grau 4</span><p>As tabelas de convênio são tratadas à mão, as sugestões de melhoria não têm canal e o reconhecimento da gincana do sábado trabalhado não tem nenhum registro formal.</p></div>
+    </div>
+    <p class="note">A rotatividade alta e o treinamento longo de quem chega agravam esses pontos. O Hub não substitui o UniLab: é um componente complementar, voltado só para a rotina da equipe de suporte, com banco de dados próprio e isolado do sistema administrativo confidencial da empresa.</p>
+
+    <div class="sub"><h3>Tecnologias utilizadas</h3><p>Versões fixadas no projeto. Todas são de código aberto, sem custo de licença.</p></div>
+    <div class="tech">
+      <div class="panel">
+        <span class="layer">Interface</span>
+        <ul style="margin-top:12px">
+          <li><b>React</b><span class="v">19.3</span><small>Interface em componentes, entregue como SPA</small></li>
+          <li><b>TypeScript</b><span class="v">6.0</span><small>Tipagem estática no front-end</small></li>
+          <li><b>Vite</b><span class="v">8.3</span><small>Build e servidor de desenvolvimento</small></li>
+          <li><b>Tailwind CSS + daisyUI</b><span class="v">4.3 · 5.7</span><small>Estilo e temas claro e escuro</small></li>
+          <li><b>Lucide</b><span class="v">1.70</span><small>Ícones</small></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <span class="layer">Back-end</span>
+        <ul style="margin-top:12px">
+          <li><b>Python</b><span class="v">3.14</span><small>Linguagem do back-end e das futuras automações</small></li>
+          <li><b>FastAPI + Uvicorn</b><span class="v">0.162 · 0.54</span><small>API REST e servidor que a executa</small></li>
+          <li><b>Pydantic</b><span class="v">2.14</span><small>Validação do que entra e sai da API</small></li>
+          <li><b>SQLAlchemy + PyMySQL</b><span class="v">2.1 · 1.2</span><small>ORM com consultas parametrizadas</small></li>
+          <li><b>argon2-cffi</b><span class="v">25.1</span><small>Hash das senhas</small></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <span class="layer">Dados e ferramentas</span>
+        <ul style="margin-top:12px">
+          <li><b>MariaDB</b><span class="v">12.3 LTS</span><small>Banco relacional com regras garantidas por restrições</small></li>
+          <li><b>DBeaver</b><span class="v">26.2</span><small>Administração e testes do banco</small></li>
+          <li><b>Git</b><span class="v">2.55</span><small>Controle de versão</small></li>
+          <li><b>Astah</b><span class="v">44</span><small>Diagramas UML</small></li>
+          <li><b>Bizagi Modeler</b><span class="v">4.3</span><small>Workflow em BPMN</small></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub"><h3>Arquitetura da solução</h3><p>Três camadas, com as regras de negócio no servidor e no banco, nunca só na tela.</p></div>
+    <div class="arch">
+      <div class="box">
+        <span class="k">Navegador</span>
+        <h3>Interface React</h3>
+        <ul><li>Chrome, Edge ou Firefox, sem instalar nada</li><li>Tema escuro padrão e opção clara</li><li>Esconde ações sem permissão (só experiência de uso)</li></ul>
+      </div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 46 14"><path d="M0 7h40M34 1l8 6-8 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>REST · JSON<br>cookie de sessão</div>
+      <div class="box">
+        <span class="k">Servidor de aplicação</span>
+        <h3>API FastAPI</h3>
+        <ul><li>Um pacote por módulo: users, sessions, trophies, keeps</li><li>Cada módulo em fronteira (router), controle (service) e entidade (models)</li><li>Confere perfil e autoria em toda rota</li><li>Imagens dos Keeps gravadas em disco</li></ul>
+      </div>
+      <div class="arrow" aria-hidden="true"><svg viewBox="0 0 46 14"><path d="M0 7h40M34 1l8 6-8 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>SQL<br>TCP/IP</div>
+      <div class="box">
+        <span class="k">Servidor de banco</span>
+        <h3>MariaDB · hub_uniware</h3>
+        <ul><li>9 tabelas com prefixo por módulo: seg_, trf_, kep_</li><li>Unicidade: 1 troféu por doador em cada edição</li><li>Verificação: ninguém entrega troféu a si mesmo; Keep privado nunca é validado</li></ul>
+      </div>
+    </div>
+    <div class="split">
+      <div class="panel">
+        <h3>Segurança</h3>
+        <ul style="margin-top:10px">
+          <li><b>Senhas</b> guardadas só como hash Argon2; troca obrigatória no primeiro acesso.</li>
+          <li><b>Sessão</b> em cookie HttpOnly e SameSite=strict; o banco guarda só o hash SHA-256 do token.</li>
+          <li><b>Login</b> com limite de tentativas por usuário e por IP.</li>
+          <li><b>Imagens</b> conferidas pelo conteúdo do arquivo, não pela extensão, e salvas com nome aleatório.</li>
+          <li><b>Banco</b> acessado pela API com um usuário que só lê e grava dados, sem alterar tabelas.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Perfis de acesso</h3>
+        <ul style="margin-top:10px">
+          <li><b>Suporte</b> (atendente): consulta e cria Keeps, vê o ranking e o próprio histórico de troféus.</li>
+          <li><b>Supervisor</b>: tudo do suporte, mais registrar troféus, validar Keeps, registrar observações e cadastrar tags.</li>
+          <li><b>Infraestrutura</b>: tudo do suporte, mais cadastrar, importar, ativar e desativar usuários.</li>
+          <li>Não existe autocadastro: o acesso depende de um usuário criado pela Infraestrutura.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. CASOS DE USO E CRONOGRAMA -->
+<section id="casos-de-uso">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">3 · Casos de uso e cronograma</span>
+      <h2>Dezesseis casos de uso, sete já entregues</h2>
+      <p class="lead">Os casos de uso foram definidos no levantamento com os supervisores e apresentados no Plano de Estágio. Na Etapa 2 foram desenvolvidos os módulos de troféus, UniKeeps e usuários; os demais seguem para o próximo semestre.</p>
+    </div>
+
+    <div class="sub" style="margin-top:0"><h3>Casos de uso previstos</h3></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Caso de uso</th><th>Ator</th><th>Descrição</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr class="group"><td colspan="5">Gerenciamento de troféus</td></tr>
+          <tr><td class="n">01</td><td><span class="mono">SUC_Registrar_Troféu</span></td><td>Supervisor</td><td>Registrar os troféus entregues em cada edição da gincana, com edição e exclusão por até 3 dias após a edição.</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td class="n">02</td><td><span class="mono">SUC_Consultar_Ranking_Troféus</span></td><td>Suporte</td><td>Ver a classificação da equipe pelo total de troféus recebidos no ano, com destaque para os três primeiros.</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td class="n">03</td><td><span class="mono">SUC_Consultar_Histórico_Troféus</span></td><td>Suporte</td><td>Consultar o próprio histórico, com os troféus doados e recebidos.</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr class="group"><td colspan="5">UniKeeps</td></tr>
+          <tr><td class="n">04</td><td><span class="mono">SUC_Visualizar_Grafo_Conhecimento</span></td><td>Suporte</td><td>Consultar o UniKeeps em forma de grafo ligado por tags, buscar pelo erro relatado e localizar casos já resolvidos.</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td class="n">05</td><td><span class="mono">SUC_Criar_Keeps</span></td><td>Suporte</td><td>Registrar um novo Keep (título, problema, resolução, tags, até 5 imagens, público ou privado) a partir do grafo.</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td class="n">06</td><td><span class="mono">SUC_Validar_Keeps</span></td><td>Supervisor</td><td>Validar Keeps públicos como aptos ou não aptos para a base futura do Uni-Bot.</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr class="group"><td colspan="5">Usuários</td></tr>
+          <tr><td class="n">07</td><td><span class="mono">SUC_Gerenciar_Usuário</span></td><td>Infraestrutura</td><td>Cadastrar usuários, um a um ou por planilha, definir o perfil e ativar ou desativar.</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr class="group"><td colspan="5">Caixinha de Sugestão</td></tr>
+          <tr><td class="n">08</td><td><span class="mono">SUC_Criar_Sugestão</span></td><td>Suporte</td><td>Registrar uma sugestão de melhoria, identificada ou anônima.</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td class="n">09</td><td><span class="mono">SUC_Consultar_Sugestões</span></td><td>Suporte</td><td>Acompanhar as sugestões da equipe e seus status.</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td class="n">10</td><td><span class="mono">SUC_Apoiar_Sugestão</span></td><td>Suporte</td><td>Apoiar a sugestão de um colega (estende Consultar Sugestões).</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td class="n">11</td><td><span class="mono">SUC_Gerenciar_Sugestões</span></td><td>Supervisor</td><td>Administrar e responder as sugestões recebidas.</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td class="n">12</td><td><span class="mono">SUC_Alterar_Status_Sugestão</span></td><td>Supervisor</td><td>Alterar a situação de uma sugestão (estende Gerenciar Sugestões).</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td class="n">13</td><td><span class="mono">SUC_Definir_Prazo</span></td><td>Supervisor</td><td>Definir o prazo de atendimento de uma sugestão (estende Gerenciar Sugestões).</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr class="group"><td colspan="5">Tratador de Tabela e Uni-Bot</td></tr>
+          <tr><td class="n">14</td><td><span class="mono">SUC_Tratar_Tabela</span></td><td>Suporte</td><td>Enviar uma tabela de convênio para tratamento automático (estende Gerenciar Unibot).</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td class="n">15</td><td><span class="mono">SUC_Gerenciar_Unibot</span></td><td>Suporte</td><td>Conversar com o assistente de IA sobre o UniLab, inclusive enviando imagens de erro.</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td class="n">16</td><td><span class="mono">SUC_Gerenciar_Conversas</span></td><td>Suporte</td><td>Criar, pesquisar e retomar conversas anteriores com o Uni-Bot.</td><td><span class="pill next">Previsto</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub"><h3>Cronograma de desenvolvimento por caso de uso</h3><p>Datas de conclusão reais e previsão para o que falta.</p></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Caso de uso</th><th>Módulo</th><th>Etapa</th><th>Conclusão / previsão</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><span class="mono">SUC_Registrar_Troféu</span></td><td>Troféus</td><td>Etapa 1 (protótipo) e Etapa 2</td><td class="date">Protótipo: 19/09/2026<br>Versão final: 07/11/2026</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td><span class="mono">SUC_Consultar_Ranking_Troféus</span></td><td>Troféus</td><td>Etapa 2</td><td class="date">07/11/2026</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td><span class="mono">SUC_Consultar_Histórico_Troféus</span></td><td>Troféus</td><td>Etapa 2</td><td class="date">07/11/2026</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td><span class="mono">SUC_Visualizar_Grafo_Conhecimento</span></td><td>UniKeeps</td><td>Etapa 2</td><td class="date">07/11/2026</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td><span class="mono">SUC_Criar_Keeps</span></td><td>UniKeeps</td><td>Etapa 2</td><td class="date">07/11/2026</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td><span class="mono">SUC_Validar_Keeps</span></td><td>UniKeeps</td><td>Etapa 2</td><td class="date">07/11/2026</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td><span class="mono">SUC_Gerenciar_Usuário</span></td><td>Usuários</td><td>Etapa 2</td><td class="date">07/11/2026</td><td><span class="pill ok">Concluído</span></td></tr>
+          <tr><td><span class="mono">SUC_Criar_Sugestão</span>, <span class="mono">SUC_Consultar_Sugestões</span>, <span class="mono">SUC_Apoiar_Sugestão</span></td><td>Caixinha de Sugestão</td><td>Próximo semestre · 1ª entrega</td><td class="date">1º semestre de 2027</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td><span class="mono">SUC_Gerenciar_Sugestões</span>, <span class="mono">SUC_Alterar_Status_Sugestão</span>, <span class="mono">SUC_Definir_Prazo</span></td><td>Caixinha de Sugestão</td><td>Próximo semestre · 1ª entrega</td><td class="date">1º semestre de 2027</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td><span class="mono">SUC_Tratar_Tabela</span></td><td>Tratador de Tabela</td><td>Próximo semestre · 2ª entrega</td><td class="date">1º semestre de 2027</td><td><span class="pill next">Previsto</span></td></tr>
+          <tr><td><span class="mono">SUC_Gerenciar_Unibot</span>, <span class="mono">SUC_Gerenciar_Conversas</span></td><td>Uni-Bot</td><td>Próximo semestre · 3ª entrega</td><td class="date">1º semestre de 2027</td><td><span class="pill next">Previsto</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">A ordem das próximas entregas segue a dependência entre os módulos: o Uni-Bot fica por último porque só poderá consultar Keeps públicos validados como aptos, e essa base está sendo formada agora pelo UniKeeps.</p>
+
+    <div class="sub"><h3>Fases do plano de estágio</h3><p>Conforme o cronograma de atividades definido pelo professor orientador.</p></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Fase</th><th>Período</th><th>Entregas</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Elaboração e início do projeto</td><td class="date">ago/2026</td><td>Cronograma, Pedidos do Investidor, Especificação Suplementar, Documento de Visão</td><td><span class="pill ok">Concluída</span></td></tr>
+          <tr><td>2 · Definição e plano do projeto</td><td class="date">ago a set/2026</td><td>Protótipo de telas, Diagrama de Casos de Uso, Workflow AS-IS, Glossário, Plano de Estágio, CRUD funcional (protótipo de troféus)</td><td><span class="pill ok">Concluída</span></td></tr>
+          <tr><td>3 · Lançamento e execução do projeto</td><td class="date">out a nov/2026</td><td>Especificações de caso de uso, DER, diagramas de classe, sequência, estado e implantação, implementação de Troféus e UniKeeps, Relatório de Estágio, documentação da banca</td><td><span class="pill ok">Concluída</span></td></tr>
+          <tr><td>4 · Controle e desempenho do projeto</td><td class="date">próxima etapa</td><td>Caixinha de Sugestão, Tratador de Tabela e Uni-Bot</td><td><span class="pill next">Prevista</span></td></tr>
+          <tr><td>5 · Fechamento do projeto</td><td class="date">próxima etapa</td><td>Hospedagem definitiva, manual do usuário e entrega final</td><td><span class="pill next">Prevista</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sub"><h3>Evolução do bimestre</h3><p>Como o projeto saiu do protótipo da Etapa 1 e chegou à versão funcional.</p></div>
+    <div class="split" style="margin-top:0">
+      <ol class="timeline">
+        <li><time>19/09/2026</time><p><b>Protótipo de troféus (Etapa 1).</b> Java, Spring Boot e banco H2 em memória, para validar login, perfis e a comunicação entre front-end e back-end.</p></li>
+        <li><time>16/10/2026</time><p><b>Auditoria do protótipo e decisão da stack.</b> Migração para Python, FastAPI e MariaDB, como previsto nos documentos do RUP e recomendado pelo supervisor.</p></li>
+        <li><time>30/10/2026</time><p><b>DER refeito</b> conforme a orientação: o diagrama passa a ser literalmente o banco, com cardinalidade em números.</p></li>
+        <li><time>31/10/2026</time><p><b>Início da migração</b> do back-end, começando pelo banco de dados.</p></li>
+      </ol>
+      <ol class="timeline">
+        <li><time>04/11/2026</time><p><b>MariaDB instalado</b> e tabelas de usuários e troféus criadas, com as regras do banco testadas no DBeaver.</p></li>
+        <li class="hl"><time>07/11/2026</time><p><b>Troféus, UniKeeps, usuários e login funcionando</b> de ponta a ponta, com as telas capturadas para a documentação.</p></li>
+        <li><time>08/11/2026</time><p><b>Especificações de caso de uso v1.1, diagramas de sequência e Relatório de Estágio v2.1</b> atualizados de acordo com o sistema implementado.</p></li>
+      </ol>
+    </div>
+
+    <div class="sub"><h3>Cronograma de entregas</h3><p>Gráfico de Gantt do estágio, atualizado em 08/11/2026.</p></div>
+    <div class="dcard" style="max-width:900px">
+      <button class="thumb gantt" type="button" data-view="diagramas/cronograma-entregas.png" data-title="Cronograma de entregas (Gantt)" aria-label="Ampliar o cronograma de entregas"><img src="diagramas/cronograma-entregas.png" alt="Gráfico de Gantt com as fases do estágio de agosto a novembro de 2026"></button>
+    </div>
+  </div>
+</section>
+
+<!-- 4. DOCUMENTAÇÃO -->
+<section id="documentacao">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">4 · Documentação</span>
+      <h2>Diagramas do projeto</h2>
+      <p class="lead">Diagramas UML feitos no Astah, DER conferido com o banco real no DBeaver e workflow em BPMN no Bizagi Modeler.</p>
+    </div>
+    <p class="hint">Clique na imagem para ampliar dentro da página. O botão “Abrir imagem” abre o arquivo original em tamanho real.</p>
+
+    <div class="diagrams" id="diagram-grid">
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/classes.png" data-title="Diagrama de Classes" data-group="diag"><img src="thumbs/classes.webp" alt="Diagrama de classes do Hub Uniware"></button>
+        <div class="body"><span class="cat">Estrutura</span><h3>Diagrama de Classes</h3><p>Classes de entidade, fronteira e controle de todos os módulos, com as associações e oito enumerações. Validado pelo orientador.</p><div class="actions"><a class="btn small" href="diagramas/classes.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/sequencia-registrar-trofeu.png" data-title="Diagrama de Sequência · Registrar Troféu" data-group="diag"><img src="thumbs/sequencia-registrar-trofeu.webp" alt="Diagrama de sequência do registro de troféu"></button>
+        <div class="body"><span class="cat">Comportamento · Sequência</span><h3>Registrar Troféu</h3><p>Do formulário com o sábado sugerido até a gravação, incluindo a recusa pela restrição de unicidade quando o doador já entregou na edição.</p><div class="actions"><a class="btn small" href="diagramas/sequencia-registrar-trofeu.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/sequencia-criar-keep.png" data-title="Diagrama de Sequência · Criar Keep" data-group="diag"><img src="thumbs/sequencia-criar-keep.webp" alt="Diagrama de sequência da criação de Keep"></button>
+        <div class="body"><span class="cat">Comportamento · Sequência</span><h3>Criar Keep</h3><p>Validação dos campos e das tags, gravação do Keep e envio de cada imagem com a conferência de autoria, limite e formato.</p><div class="actions"><a class="btn small" href="diagramas/sequencia-criar-keep.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/estados-keep.png" data-title="Diagrama de Estado · Keep" data-group="diag"><img src="thumbs/estados-keep.webp" alt="Diagrama de estados do Keep"></button>
+        <div class="body"><span class="cat">Comportamento · Estado</span><h3>Estados do Keep</h3><p>Privado pode virar público, mas não o contrário. O público passa por Não validado, Apto ou Não apto, e volta a Não validado quando é alterado.</p><div class="actions"><a class="btn small" href="diagramas/estados-keep.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/estados-trofeu.png" data-title="Diagrama de Estado · Registro de Troféu" data-group="diag"><img src="thumbs/estados-trofeu.webp" alt="Diagrama de estados do registro de troféu"></button>
+        <div class="body"><span class="cat">Comportamento · Estado</span><h3>Estados do registro de troféu</h3><p>Original, Editado ou Excluído dentro do prazo de três dias após a edição; depois disso, Travado.</p><div class="actions"><a class="btn small" href="diagramas/estados-trofeu.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/der.png" data-title="Diagrama de Entidade e Relacionamento" data-group="diag"><img src="thumbs/der.webp" alt="Diagrama de entidade e relacionamento do banco hub_uniware"></button>
+        <div class="body"><span class="cat">Dados</span><h3>Diagrama de Entidade e Relacionamento</h3><p>As nove tabelas do banco, com colunas, tipos, chaves e cardinalidade em números, como (0,n) e (1,1).</p><div class="actions"><a class="btn small" href="diagramas/der.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb dark" type="button" data-view="diagramas/der-dbeaver.png" data-title="DER gerado pelo DBeaver a partir do banco" data-group="diag"><img src="thumbs/der-dbeaver.webp" alt="DER gerado pelo DBeaver a partir do MariaDB"></button>
+        <div class="body"><span class="cat">Dados</span><h3>DER gerado do banco real</h3><p>Diagrama gerado pelo DBeaver direto do MariaDB, usado para conferir que o DER do Astah é igual ao banco implementado.</p><div class="actions"><a class="btn small" href="diagramas/der-dbeaver.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/casos-de-uso.png" data-title="Diagrama de Caso de Uso" data-group="diag"><img src="thumbs/casos-de-uso.webp" alt="Diagrama de casos de uso do Hub Uniware"></button>
+        <div class="body"><span class="cat">Requisitos</span><h3>Diagrama de Caso de Uso</h3><p>Os 16 casos de uso e os três atores, em que supervisor e infraestrutura herdam o que o suporte pode fazer.</p><div class="actions"><a class="btn small" href="diagramas/casos-de-uso.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/implantacao.png" data-title="Diagrama de Implantação" data-group="diag"><img src="thumbs/implantacao.webp" alt="Diagrama de implantação"></button>
+        <div class="body"><span class="cat">Arquitetura</span><h3>Diagrama de Implantação</h3><p>Computador do colaborador, servidor de aplicação com Python e Uvicorn e servidor MariaDB. O Uni-Bot aparece marcado como futuro.</p><div class="actions"><a class="btn small" href="diagramas/implantacao.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+      <article class="dcard">
+        <button class="thumb" type="button" data-view="diagramas/workflow-as-is.png" data-title="Workflow AS-IS (BPMN)" data-group="diag"><img src="thumbs/workflow-as-is.webp" alt="Workflow AS-IS do atendimento em BPMN"></button>
+        <div class="body"><span class="cat">Processo</span><h3>Workflow AS-IS (BPMN)</h3><p>O atendimento como acontece hoje, em quatro raias, com a busca manual que se repete quando o cliente não valida a resposta.</p><div class="actions"><a class="btn small" href="diagramas/workflow-as-is.png" target="_blank" rel="noopener">Abrir imagem ↗</a></div></div>
+      </article>
+    </div>
+
+    <div class="sub"><h3>Artefatos do projeto</h3><p>Documentos do RUP nas versões mais recentes.</p></div>
+    <div class="artefacts">
+      <a class="artefact" href="docs/plano-de-estagio.pdf" target="_blank" rel="noopener"><b>Plano de Estágio</b><span>Etapa 1 · PDF</span></a>
+      <a class="artefact" href="docs/pedidos-do-investidor-v1.2.pdf" target="_blank" rel="noopener"><b>Pedidos do Investidor</b><span>v1.2 · PDF</span></a>
+      <a class="artefact" href="docs/visao-v1.1.pdf" target="_blank" rel="noopener"><b>Documento de Visão</b><span>v1.1 · PDF</span></a>
+      <a class="artefact" href="docs/especificacao-suplementar-v1.1.pdf" target="_blank" rel="noopener"><b>Especificação Suplementar</b><span>v1.1 · PDF</span></a>
+      <a class="artefact" href="docs/glossario-v1.1.pdf" target="_blank" rel="noopener"><b>Glossário</b><span>v1.1 · PDF</span></a>
+      <a class="artefact" href="docs/especificacao-caso-de-uso-trofeus-v1.1.pdf" target="_blank" rel="noopener"><b>Caso de uso · Gerenciar Troféus</b><span>v1.1 · PDF</span></a>
+      <a class="artefact" href="docs/especificacao-caso-de-uso-keeps-v1.1.pdf" target="_blank" rel="noopener"><b>Caso de uso · Gerenciar Keeps</b><span>v1.1 · PDF</span></a>
+      <a class="artefact" href="docs/relatorio-estagio-etapa2-v2.1.pdf" target="_blank" rel="noopener"><b>Relatório de Estágio</b><span>Etapa 2 · v2.1 · PDF</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 5. TELAS -->
+<section id="telas">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">5 · Telas</span>
+      <h2>O sistema em funcionamento</h2>
+      <p class="lead">Capturas do sistema rodando com a API FastAPI e o MariaDB, em 07/11/2026. Cada perfil vê só o que pode usar, e as mesmas regras são conferidas de novo no servidor.</p>
+    </div>
+
+    <div class="video" id="video" hidden>
+      <div class="sub" style="margin-top:0"><h3>Vídeo de demonstração</h3></div>
+      <div id="video-slot"></div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Módulos">
+      <button class="tab" role="tab" type="button" aria-selected="true" aria-controls="tela-trofeus" id="tab-trofeus">Troféus</button>
+      <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tela-keeps" id="tab-keeps">UniKeeps</button>
+      <button class="tab" role="tab" type="button" aria-selected="false" aria-controls="tela-usuarios" id="tab-usuarios">Login e usuários</button>
+    </div>
+
+    <div class="shots" id="tela-trofeus" role="tabpanel" aria-labelledby="tab-trofeus">
+      <figure class="shot"><button type="button" data-view="telas/trofeus-supervisor.webp" data-title="Troféus · registro pelo supervisor" data-group="trofeus" data-photo><img src="telas/trofeus-supervisor.webp" alt="Tela de troféus do supervisor com formulário de registro, lista de registros e ranking"></button><figcaption><span class="who">Supervisor</span><b>Registrar troféus da edição</b><span>O sábado mais recente já vem preenchido. O supervisor escolhe quem entregou e quem recebeu, e a lista e o ranking de 2026 atualizam na hora.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/trofeus-editar.webp" data-title="Troféus · edição de registro" data-group="trofeus" data-photo><img src="telas/trofeus-editar.webp" alt="Edição de um registro de troféu"></button><figcaption><span class="who">Supervisor</span><b>Editar um registro</b><span>Lápis e lixeira só aparecem nos registros dentro do prazo de três dias após a edição. Depois disso o registro fica travado.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/trofeus-historico-edicoes.webp" data-title="Troféus · histórico de edições" data-group="trofeus" data-photo><img src="telas/trofeus-historico-edicoes.webp" alt="Janela com o histórico de edições de um troféu"></button><figcaption><span class="who">Supervisor</span><b>Histórico de edições</b><span>Registro editado ganha um ícone. A janela mostra quem editou, quando e o que mudou.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/trofeus-atendente.webp" data-title="Troféus · visão do atendente" data-group="trofeus" data-photo><img src="telas/trofeus-atendente.webp" alt="Tela de troféus do atendente com Meus troféus e ranking"></button><figcaption><span class="who">Suporte</span><b>Meus troféus e ranking</b><span>O atendente vê os troféus que doou e recebeu e o total dos colegas no ranking do ano, mas não o histórico detalhado dos outros.</span></figcaption></figure>
+    </div>
+
+    <div class="shots" id="tela-keeps" role="tabpanel" aria-labelledby="tab-keeps" hidden>
+      <figure class="shot"><button type="button" data-view="telas/keeps-grafo.webp" data-title="UniKeeps · grafo de conhecimento" data-group="keeps" data-photo><img src="telas/keeps-grafo.webp" alt="Grafo de conhecimento com Keeps ligados por tags"></button><figcaption><span class="who">Suporte</span><b>Grafo de conhecimento</b><span>Cada Keep público é um nó, e Keeps com tags em comum ficam ligados. A barra de busca aceita a descrição do erro ou a mensagem colada.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/keeps-detalhe.webp" data-title="UniKeeps · detalhe do Keep" data-group="keeps" data-photo><img src="telas/keeps-detalhe.webp" alt="Painel de detalhes de um Keep com problema, resolução e Keeps relacionados"></button><figcaption><span class="who">Suporte</span><b>Detalhe do Keep</b><span>Problema, resolução, tags, situação da validação e observações do supervisor, com os Keeps relacionados pelas mesmas tags.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/keeps-filtro.webp" data-title="UniKeeps · filtro por tag" data-group="keeps" data-photo><img src="telas/keeps-filtro.webp" alt="Filtro por tag Apoio no UniKeeps"></button><figcaption><span class="who">Suporte</span><b>Filtro por tag</b><span>Escolher uma tag reduz a lista e o grafo aos Keeps daquela categoria.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/keeps-novo.webp" data-title="UniKeeps · novo Keep" data-group="keeps" data-photo><img src="telas/keeps-novo.webp" alt="Formulário de novo Keep"></button><figcaption><span class="who">Suporte</span><b>Novo Keep</b><span>Título, problema, resolução, de uma a dez tags, visibilidade e até cinco imagens, com contador de caracteres em cada campo.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/keeps-privado.webp" data-title="UniKeeps · Meus keeps" data-group="keeps" data-photo><img src="telas/keeps-privado.webp" alt="Aba Meus keeps com um Keep privado"></button><figcaption><span class="who">Suporte</span><b>Keep privado em “Meus keeps”</b><span>O Keep privado aparece só para o autor. Nem o supervisor o vê, e ele nunca entra no grafo da equipe.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/keeps-sem-resultado.webp" data-title="UniKeeps · busca sem resultado" data-group="keeps" data-photo><img src="telas/keeps-sem-resultado.webp" alt="Busca sem resultado no UniKeeps"></button><figcaption><span class="who">Suporte</span><b>Busca sem resultado</b><span>Quando nenhum Keep combina com a busca ou o filtro, a tela avisa em vez de ficar vazia.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/keeps-supervisor.webp" data-title="UniKeeps · visão do supervisor" data-group="keeps" data-photo><img src="telas/keeps-supervisor.webp" alt="UniKeeps na visão do supervisor com botão Tags"></button><figcaption><span class="who">Supervisor</span><b>Visão do supervisor</b><span>Além do que o atendente vê, o supervisor valida Keeps públicos como aptos ou não aptos e registra observações.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/keeps-tags.webp" data-title="UniKeeps · cadastro de tags" data-group="keeps" data-photo><img src="telas/keeps-tags.webp" alt="Janela de cadastro de tags"></button><figcaption><span class="who">Supervisor</span><b>Cadastro de tags</b><span>Só o supervisor cria tags novas. O nome não se repete, mesmo com maiúsculas diferentes.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/keeps-tema-claro.webp" data-title="UniKeeps · tema claro" data-group="keeps" data-photo><img src="telas/keeps-tema-claro.webp" alt="UniKeeps no tema claro"></button><figcaption><span class="who">Todos</span><b>Tema claro</b><span>O tema escuro é o padrão, e cada usuário pode trocar para o claro pelo ícone da barra superior.</span></figcaption></figure>
+    </div>
+
+    <div class="shots" id="tela-usuarios" role="tabpanel" aria-labelledby="tab-usuarios" hidden>
+      <figure class="shot"><button type="button" data-view="telas/login-escuro.webp" data-title="Login · tema escuro" data-group="usuarios" data-photo><img src="telas/login-escuro.webp" alt="Tela de login no tema escuro"></button><figcaption><span class="who">Todos</span><b>Login</b><span>Acesso com a credencial interna. Não há autocadastro, e no primeiro acesso a troca de senha é obrigatória.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/login-claro.webp" data-title="Login · tema claro" data-group="usuarios" data-photo><img src="telas/login-claro.webp" alt="Tela de login no tema claro"></button><figcaption><span class="who">Todos</span><b>Login no tema claro</b><span>A mesma tela no tema claro.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/usuarios.webp" data-title="Usuários · lista" data-group="usuarios" data-photo><img src="telas/usuarios.webp" alt="Lista de usuários com perfil e situação"></button><figcaption><span class="who">Infraestrutura</span><b>Usuários</b><span>Lista com perfil e situação. Usuário não é apagado, e sim desativado, para preservar o histórico de troféus e a autoria dos Keeps.</span></figcaption></figure>
+      <figure class="shot"><button type="button" data-view="telas/usuarios-novo.webp" data-title="Usuários · novo usuário" data-group="usuarios" data-photo><img src="telas/usuarios-novo.webp" alt="Formulário de novo usuário"></button><figcaption><span class="who">Infraestrutura</span><b>Novo usuário</b><span>Cadastro individual com perfil e senha inicial. Também é possível importar vários de uma vez por planilha CSV ou XLSX.</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 6. RELATÓRIO -->
+<section id="relatorio">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">6 · Relatório de Estágio</span>
+      <h2>Relatório de Estágio · Etapa 2</h2>
+      <p class="lead">Versão 2.1, atualizada em 08/11/2026, com as atividades desenvolvidas até a entrega deste portfólio. Continua o Plano de Estágio da Etapa 1 e cobre o projeto desde o início.</p>
+    </div>
+    <div class="report">
+      <div class="panel">
+        <h3>Hub Uniware: plataforma interna de apoio ao suporte técnico</h3>
+        <p>36 páginas · PDF · 1,9 MB</p>
+        <div class="btns" style="margin-top:16px">
+          <a class="btn primary" href="docs/relatorio-estagio-etapa2-v2.1.pdf" target="_blank" rel="noopener">Abrir o PDF ↗</a>
+          <a class="btn" id="pdf-download" href="docs/relatorio-estagio-etapa2-v2.1.pdf" download hidden>Baixar</a>
+        </div>
+        <ol>
+          <li>Introdução, proposta, objetivos e justificativa</li>
+          <li>Diagramas: caso de uso, DER, classe, sequência, estado e implantação</li>
+          <li>Telas</li>
+          <li>Workflow AS-IS em BPMN</li>
+          <li>Recursos e ambiente de desenvolvimento</li>
+          <li>Cronograma</li>
+        </ol>
+      </div>
+      <div id="pdf-area">
+        <iframe class="pdf-frame" id="pdf-frame" title="Relatório de Estágio Etapa 2 (PDF)" data-src="docs/relatorio-estagio-etapa2-v2.1.pdf" hidden></iframe>
+        <a class="pdf-cover" id="pdf-cover" href="docs/relatorio-estagio-etapa2-v2.1.pdf" target="_blank" rel="noopener"><img src="thumbs/relatorio-capa.webp" alt="Capa do Relatório de Estágio Etapa 2"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. IDENTIFICAÇÃO -->
+<section id="aluno">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">7 · Aluno</span>
+      <h2>Identificação do aluno</h2>
+    </div>
+    <dl class="student">
+      <div><dt>Nome completo</dt><dd>Natan Souza Rodrigues</dd></div>
+      <div><dt>Matrícula</dt><dd class="mono" style="font-size:1.05rem">242041014</dd></div>
+      <div><dt>Professor orientador</dt><dd>Prof. Marcelo Yukio Yamamoto</dd></div>
+      <div><dt>Curso</dt><dd>Bacharelado em Ciência da Computação</dd></div>
+      <div><dt>Instituição</dt><dd>Centro Universitário Filadélfia (UniFil)</dd></div>
+      <div><dt>Empresa concedente</dt><dd>Uniware Consultoria em Informática</dd></div>
+      <div><dt>Supervisor na empresa</dt><dd>Carlos Razaboni</dd></div>
+      <div><dt>Projeto</dt><dd>Hub Uniware</dd></div>
+    </dl>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Natan Souza Rodrigues · UniFil · 2026</span>
+    <a href="#inicio">Voltar ao início ↑</a>
+  </div>
+</footer>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
+  <div class="viewer-bar">
+    <span class="title" id="viewer-title"></span>
+    <span class="count" id="viewer-count"></span>
+    <button class="btn small" type="button" id="viewer-prev" aria-label="Imagem anterior">←</button>
+    <button class="btn small" type="button" id="viewer-next" aria-label="Próxima imagem">→</button>
+    <button class="btn small" type="button" id="viewer-zoom">Tamanho real</button>
+    <a class="btn small" id="viewer-open" href="#" target="_blank" rel="noopener">Abrir ↗</a>
+    <button class="btn small" type="button" id="viewer-close">Fechar</button>
+  </div>
+  <div class="viewer-stage" id="viewer-stage"><img id="viewer-img" alt=""></div>
+</div>
+
+<script>
+/* Para mostrar o vídeo, coloque aqui o link do YouTube ou o caminho de um .mp4 (ex.: "video/demo.mp4"). */
+const VIDEO_URL = "";
+
+(function(){
+  // vídeo opcional
+  if (VIDEO_URL) {
+    const slot = document.getElementById('video-slot');
+    const yt = VIDEO_URL.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+    if (yt) {
+      slot.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + yt[1] + '" title="Vídeo de demonstração do Hub Uniware" allowfullscreen></iframe>';
+    } else {
+      slot.innerHTML = '<video controls preload="metadata" src="' + VIDEO_URL + '">Seu navegador não reproduz este vídeo.</video>';
+    }
+    document.getElementById('video').hidden = false;
+  }
+
+  // PDF embutido só quando o site abre fora de um frame (ex.: GitHub Pages)
+  let topLevel = true;
+  try { topLevel = window.self === window.top; } catch (e) { topLevel = false; }
+  if (topLevel) {
+    const f = document.getElementById('pdf-frame');
+    f.src = f.dataset.src; f.hidden = false;
+    document.getElementById('pdf-cover').hidden = true;
+    document.getElementById('pdf-download').hidden = false;
+  }
+
+  // abas das telas
+  const tabs = document.querySelectorAll('.tab');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(o => { const on = o === t; o.setAttribute('aria-selected', on); document.getElementById(o.getAttribute('aria-controls')).hidden = !on; });
+  }));
+
+  // menu: marca a seção visível
+  const links = [...document.querySelectorAll('.nav a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+  const mark = () => {
+    let cur = 0; const y = window.scrollY + 120;
+    secs.forEach((s, i) => { if (s && s.offsetTop <= y) cur = i; });
+    links.forEach((a, i) => a.setAttribute('aria-current', i === cur));
+  };
+  window.addEventListener('scroll', mark, {passive:true}); mark();
+
+  // visualizador de imagens
+  const v = document.getElementById('viewer'), img = document.getElementById('viewer-img'),
+        stage = document.getElementById('viewer-stage'), ttl = document.getElementById('viewer-title'),
+        cnt = document.getElementById('viewer-count'), open = document.getElementById('viewer-open'),
+        zoomBtn = document.getElementById('viewer-zoom');
+  let list = [], idx = 0, last = null;
+  const show = () => {
+    const b = list[idx];
+    img.src = b.dataset.view; img.alt = b.dataset.title;
+    img.classList.toggle('photo', b.hasAttribute('data-photo'));
+    ttl.textContent = b.dataset.title; open.href = b.dataset.view;
+    cnt.textContent = list.length > 1 ? (idx + 1) + ' / ' + list.length : '';
+    document.getElementById('viewer-prev').hidden = document.getElementById('viewer-next').hidden = list.length < 2;
+    stage.classList.remove('zoom'); zoomBtn.textContent = 'Tamanho real'; stage.scrollTo(0,0);
+  };
+  const toggleZoom = () => { const z = stage.classList.toggle('zoom'); zoomBtn.textContent = z ? 'Ajustar à tela' : 'Tamanho real'; };
+  const close = () => { v.hidden = true; document.body.style.overflow = ''; img.removeAttribute('src'); if (last) last.focus(); };
+  document.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => {
+    const g = b.dataset.group;
+    list = g ? [...document.querySelectorAll('[data-view][data-group="' + g + '"]')] : [b];
+    idx = list.indexOf(b); last = b; show();
+    v.hidden = false; document.body.style.overflow = 'hidden';
+    document.getElementById('viewer-close').focus();
+  }));
+  document.getElementById('viewer-close').addEventListener('click', close);
+  document.getElementById('viewer-prev').addEventListener('click', () => { idx = (idx - 1 + list.length) % list.length; show(); });
+  document.getElementById('viewer-next').addEventListener('click', () => { idx = (idx + 1) % list.length; show(); });
+  zoomBtn.addEventListener('click', toggleZoom);
+  img.addEventListener('click', toggleZoom);
+  document.addEventListener('keydown', e => {
+    if (v.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight' && list.length > 1) { idx = (idx + 1) % list.length; show(); }
+    if (e.key === 'ArrowLeft' && list.length > 1) { idx = (idx - 1 + list.length) % list.length; show(); }
+  });
+})();
+</script>
+</body>
+</html>
